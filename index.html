@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Will You Be My Valentine 💖</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <style>
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 420px;
+      animation: fadeIn 1.5s ease;
+    }
+
+    h1 {
+      color: #ff4d6d;
+      font-weight: 700;
+    }
+
+    p {
+      color: #555;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .btn-yes {
+      background-color: #ff4d6d;
+      border: none;
+      padding: 12px 30px;
+      font-size: 18px;
+      border-radius: 30px;
+      transition: 0.3s;
+    }
+
+    .btn-yes:hover {
+      background-color: #e63950;
+      transform: scale(1.1);
+    }
+
+    .btn-no {
+      position: absolute;
+      background-color: #adb5bd;
+      border: none;
+      padding: 12px 30px;
+      font-size: 18px;
+      border-radius: 30px;
+      transition: 0.2s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hearts {
+      position: fixed;
+      bottom: -50px;
+      animation: floatUp 6s infinite ease-in;
+      font-size: 24px;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h1>Hey You 💕</h1>
+    <p>
+      From the moment you came into my life,<br>
+      everything felt more beautiful 🌹<br><br>
+      Will you be my Valentine? 💌
+    </p>
+
+    <button class="btn btn-yes" onclick="yesClicked()">
+      Yes 💖
+    </button>
+  </div>
+
+  <button class="btn btn-no" id="noBtn">
+    No 🙈
+  </button>
+
+  <!-- Floating Hearts -->
+  <script>
+    const noBtn = document.getElementById("noBtn");
+
+    noBtn.style.top = "70%";
+    noBtn.style.left = "55%";
+
+    noBtn.addEventListener("mouseenter", () => {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 50);
+
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    });
+
+    function yesClicked() {
+      document.body.innerHTML = `
+        <div class="text-center text-white">
+          <h1 class="display-4">Oh madam! 💖💖💖</h1>
+          <p class="fs-3 mt-3">
+            Maki  ante Lovers leru friends  miki ante untaru  enjoy friends🌹<br>
+            Happy Forever Single's Day 💌
+          </p>
+          Note: Don't take serious its just prank
+        </div>
+      `;
+    }
+
+    // Heart animation
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "hearts";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }, 400);
+  </script>
+
+</body>
+</html>
