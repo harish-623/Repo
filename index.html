@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Will You Be My Valentine 💖</title>
+  <title>Will you💖</title>
 
   <!-- Bootstrap CSS -->
   <link
@@ -117,7 +117,7 @@
   </button>
 
   <!-- Floating Hearts -->
-  <script>
+  <!-- <script>
     const noBtn = document.getElementById("noBtn");
 
     noBtn.style.top = "70%";
@@ -156,7 +156,68 @@
         heart.remove();
       }, 6000);
     }, 400);
-  </script>
+  </script> -->
+
+  <script>
+  const noBtn = document.getElementById("noBtn");
+
+  function moveNoButton() {
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 80);
+
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+  }
+
+  // Desktop hover
+  noBtn.addEventListener("mouseenter", moveNoButton);
+
+  // Mobile touch
+  noBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault(); // stop click
+    moveNoButton();
+  });
+
+  noBtn.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+    moveNoButton();
+  });
+
+  function yesClicked() {
+    document.body.innerHTML = `
+      <div class="text-center text-white">
+        <h1 class="display-4">Oh madam! 💖💖💖</h1>
+
+        <p class="fs-3 mt-3">
+  Antha murisi pokuu 😏😂🙈<br>
+  nenu urike develop chesa, time pass kosam 😄<br>
+  nijanga proposal kadhu 😅🙏<br><br>
+
+  Maki ante lovers leru 😌💔<br>
+  Miki ante untaru 🤍🙂<br>
+  Meeru enjoy friends 😎🌹<br><br>
+
+  Happy Forever Single's Day to mee 💌😜
+</p>
+
+        
+        <small>Note: Don't take it serious, just a prank 😄</small>
+      </div>
+    `;
+  }
+
+  // Floating hearts
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "hearts";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+  }, 400);
+</script>
+
 
 </body>
 </html>
