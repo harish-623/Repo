@@ -1,0 +1,77 @@
+<div class="container-fluid p-0 vh-100 d-flex flex-column">
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-dark bg-dark px-4">
+    <span class="navbar-brand fw-bold text-info">JSON Tool</span>
+
+    <ul class="nav ms-auto">
+      <li class="nav-item"><a class="nav-link text-light">JSON BEAUTIFIER</a></li>
+      <li class="nav-item"><a class="nav-link text-light">JSON PARSER</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="flex-grow-1 d-flex align-items-center justify-content-center bg-success p-3">
+
+    <div class="row w-100 h-100">
+
+      <!-- LEFT PANEL -->
+      <div class="col-md-5 h-100">
+        <textarea
+          class="form-control h-100 shadow-sm"
+          placeholder="Paste JSON here"
+          [(ngModel)]="inputJson">
+        </textarea>
+      </div>
+
+      <!-- CENTER BUTTONS -->
+      <div class="col-md-2 d-flex flex-column justify-content-center gap-2">
+
+        <button class="btn btn-outline-light" (click)="validateJson(inputJson)">
+          Validate
+        </button>
+
+        <!-- <select class="form-select" [(ngModel)]="tabSize">
+          <option [value]="2">2 Tab Space</option>
+          <option [value]="4">4 Tab Space</option>
+        </select> -->
+
+        <button
+          class="btn btn-light fw-bold text-success"
+          (click)="formatJson(inputJson)">
+          Format / Beautify
+        </button>
+
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div class="col-md-5 h-100">
+        <textarea
+          class="form-control h-100 shadow-sm"
+          placeholder="Formatted JSON"
+          [value]="outputJson"
+          readonly>
+        </textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="bg-light text-center py-2 border-top">
+
+    <button class="btn btn-secondary btn-sm mx-1" (click)="minifyJson()">
+      Minify
+    </button>
+
+    <button class="btn btn-secondary btn-sm mx-1" (click)="copyJson()">
+      Copy
+    </button>
+
+    <button class="btn btn-danger btn-sm mx-1" (click)="clearJson()">
+      Clear
+    </button>
+
+  </div>
+
+</div>

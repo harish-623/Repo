@@ -1,0 +1,62 @@
+/* NAVBAR */
+.navbar {
+  background: #111827 !important;
+}
+
+.nav-link {
+  color: #d1d5db !important;
+}
+
+.nav-link:hover {
+  color: #22d3ee !important;
+}
+
+/* MAIN BACKGROUND */
+.editor-container,
+.bg-success {
+  background: linear-gradient(135deg, #0f172a, #1e293b) !important;
+}
+
+/* TEXTAREAS */
+textarea {
+  background: #1e293b;
+  color: #f1f5f9;
+  border: 1px solid #334155;
+  border-radius: 8px;
+}
+
+textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* CENTER BUTTONS */
+.controls button {
+  border-radius: 6px;
+}
+
+.btn-outline-light {
+  border-color: #22d3ee;
+  color: #22d3ee;
+}
+
+.btn-outline-light:hover {
+  background: #22d3ee;
+  color: black;
+}
+
+/* FORMAT BUTTON */
+.btn-light {
+  background: #22d3ee !important;
+  color: black !important;
+  font-weight: 600;
+}
+
+/* FOOTER */
+.footer,
+.bg-light {
+  background: #111827 !important;
+}
+
+.footer button {
+  border-radius: 6px;
+}
