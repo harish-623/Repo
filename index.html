@@ -1,223 +1,702 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 <head>
-  <meta charset="UTF-8">
-  <title>Will you💖</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday!</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Noto+Sans+Telugu:wght@400;700&display=swap');
 
-  <!-- Bootstrap CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  >
+  *{margin:0;padding:0;box-sizing:border-box;}
 
-  <style>
-    body {
-      height: 100vh;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Poppins', sans-serif;
-      overflow: hidden;
-    }
+  :root{
+    --gold:#FFD700;--rose:#FF4E8C;--purple:#9B59B6;
+    --orange:#FF6B35;--green:#2ECC71;--dark:#0D0D1A;
+    --card:#1A1A2E;--text:#FFF8F0;
+  }
 
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      text-align: center;
-      max-width: 420px;
-      animation: fadeIn 1.5s ease;
-    }
+  body{
+    font-family:'Baloo 2',sans-serif;
+    background:var(--dark);color:var(--text);
+    min-height:100vh;overflow-x:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
 
-    h1 {
-      color: #ff4d6d;
-      font-weight: 700;
-    }
+  /* ── CANVAS ── */
+  #fx-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
 
-    p {
-      color: #555;
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
+  /* ── STEPS ── */
+  .step{
+    position:fixed;inset:0;display:none;
+    align-items:center;justify-content:flex-start;
+    flex-direction:column;z-index:10;
+    padding:20px;text-align:center;
+    
+    overflow-y: auto;         
+  }
+  .step.active{display:flex;}
 
-    .btn-yes {
-      background-color: #ff4d6d;
-      border: none;
-      padding: 12px 30px;
-      font-size: 18px;
-      border-radius: 30px;
-      transition: 0.3s;
-    }
+  /* ═══════════════════════════════════════
+     STEP 1 — GIFT BOX
+  ═══════════════════════════════════════ */
+  #step1{background:radial-gradient(ellipse at center, #1a0a2e 0%, #0D0D1A 70%);}
 
-    .btn-yes:hover {
-      background-color: #e63950;
-      transform: scale(1.1);
-    }
+  .floating-stars span{
+    position:absolute;font-size:20px;
+    animation:twinkle 3s ease-in-out infinite;
+    pointer-events:none;
+  }
 
-    .btn-no {
-      position: absolute;
-      background-color: #adb5bd;
-      border: none;
-      padding: 12px 30px;
-      font-size: 18px;
-      border-radius: 30px;
-      transition: 0.2s;
-    }
+  .gift-wrap{position:relative;cursor:pointer;}
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+  .gift-box{
+    width:160px;height:160px;
+    background:linear-gradient(145deg,#FF4E8C,#c0392b);
+    border-radius:16px;margin:0 auto;
+    position:relative;
+    box-shadow:0 0 60px rgba(255,78,140,0.5);
+    animation:giftPulse 2s ease-in-out infinite;
+    transition:transform 0.15s;
+  }
+  .gift-box:hover{transform:scale(1.06);}
 
-    .hearts {
-      position: fixed;
-      bottom: -50px;
-      animation: floatUp 6s infinite ease-in;
-      font-size: 24px;
-    }
+  .gift-ribbon-h{
+    position:absolute;top:50%;left:0;right:0;height:24px;
+    background:var(--gold);transform:translateY(-50%);border-radius:4px;
+  }
+  .gift-ribbon-v{
+    position:absolute;left:50%;top:0;bottom:0;width:24px;
+    background:var(--gold);transform:translateX(-50%);border-radius:4px;
+  }
+  .gift-bow{
+    position:absolute;top:-22px;left:50%;transform:translateX(-50%);
+    font-size:44px;line-height:1;
+    animation:bowBounce 1.5s ease-in-out infinite;
+  }
 
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-110vh);
-        opacity: 0;
-      }
-    }
-  </style>
+  .gift-lid{
+    position:absolute;top:-18px;left:-6px;right:-6px;height:44px;
+    background:linear-gradient(145deg,#FF6B9D,#e84393);
+    border-radius:12px 12px 0 0;
+    border-bottom:4px solid rgba(0,0,0,0.15);
+  }
+  .gift-lid::after{
+    content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);
+    width:30px;height:30px;background:var(--gold);border-radius:50%;
+    box-shadow:0 0 10px rgba(255,215,0,0.8);
+  }
+
+  .step1-title{
+    font-size:clamp(22px,5vw,38px);font-weight:800;
+    color:var(--gold);margin-top:32px;
+    text-shadow:0 0 30px rgba(255,215,0,0.5);
+    animation:glow 2s ease-in-out infinite alternate;
+  }
+  .step1-sub{font-size:16px;color:rgba(255,248,240,0.6);margin-top:10px;}
+
+  .click-hint{
+    margin-top:28px;padding:14px 34px;
+    background:linear-gradient(135deg,var(--gold),var(--orange));
+    border:none;border-radius:50px;
+    color:#1a0a0a;font-size:17px;font-weight:800;
+    cursor:pointer;font-family:'Baloo 2',sans-serif;
+    box-shadow:0 6px 30px rgba(255,215,0,0.4);
+    animation:btnPulse 2s ease-in-out infinite;
+    transition:transform 0.15s;
+  }
+  .click-hint:hover{transform:translateY(-3px) scale(1.04);}
+
+  /* ═══════════════════════════════════════
+     STEP 2 — BIRTHDAY WISHES
+  ═══════════════════════════════════════ */
+  #step2{background:radial-gradient(ellipse at 30% 20%, #1a0033 0%, #0D0D1A 60%);}
+
+  .wishes-card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,215,0,0.25);
+    border-radius:28px;padding:40px 36px;
+    max-width:560px;width:100%;
+    backdrop-filter:blur(12px);
+    animation:cardIn 0.6s ease both;
+  }
+
+  .bday-badge{
+    display:inline-block;
+    font-size:12px;font-weight:600;letter-spacing:3px;
+    text-transform:uppercase;color:var(--gold);
+    margin-bottom:12px;
+  }
+
+  .bday-name{
+    font-size:clamp(36px,8vw,68px);font-weight:800;
+    line-height:1;
+    background:linear-gradient(135deg,#FFD700,#FF4E8C,#9B59B6);
+    background-size:200%;
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    animation:nameShimmer 3s linear infinite;
+    margin-bottom:8px;
+  }
+
+  .bday-age{
+    font-size:18px;color:rgba(255,248,240,0.5);
+    font-style:italic;margin-bottom:24px;
+  }
+
+  .telugu-msg{
+    font-family:'Noto Sans Telugu','Baloo 2',sans-serif;
+    font-size:clamp(15px,3vw,20px);
+    line-height:1.9;
+    color:rgba(255,248,240,0.88);
+    border-left:4px solid var(--rose);
+    padding-left:18px;margin-bottom:24px;
+    background:rgba(255,78,140,0.05);
+    border-radius:0 12px 12px 0;
+    padding:14px 18px;
+  }
+
+  .funny-line{
+    font-size:14px;color:rgba(255,248,240,0.5);
+    font-style:italic;margin-top:6px;
+  }
+
+  .wish-pills{
+    display:flex;flex-wrap:wrap;gap:8px;
+    margin-bottom:28px;
+  }
+  .pill{
+    padding:6px 16px;border-radius:50px;
+    font-size:13px;font-weight:600;
+    border:1px solid;
+  }
+  .pill-gold{background:rgba(255,215,0,0.12);border-color:rgba(255,215,0,0.35);color:var(--gold);}
+  .pill-rose{background:rgba(255,78,140,0.12);border-color:rgba(255,78,140,0.35);color:var(--rose);}
+  .pill-purple{background:rgba(155,89,182,0.12);border-color:rgba(155,89,182,0.35);color:#C39BD3;}
+  .pill-green{background:rgba(46,204,113,0.12);border-color:rgba(46,204,113,0.35);color:var(--green);}
+
+  .step2-btn{
+    width:100%;padding:15px;
+    background:linear-gradient(135deg,var(--rose),var(--purple));
+    border:none;border-radius:14px;
+    color:#fff;font-size:17px;font-weight:800;
+    cursor:pointer;font-family:'Baloo 2',sans-serif;
+    box-shadow:0 6px 28px rgba(255,78,140,0.4);
+    transition:all 0.2s;
+  }
+  .step2-btn:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(255,78,140,0.55);}
+
+  /* ═══════════════════════════════════════
+     STEP 3 — VIDEO
+  ═══════════════════════════════════════ */
+  #step3{background:radial-gradient(ellipse at 70% 80%, #001a0d 0%, #0D0D1A 60%);}
+
+  .video-card{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(46,204,113,0.25);
+    border-radius:28px;padding:32px;
+    /* max-width:640px;
+    width:100%; */
+     width:95%;
+    max-width:1200px;
+    margin:auto;
+    animation:cardIn 0.6s ease both;
+  }
+
+
+
+  .video-frame-wrap{
+    width:100%;
+    height:90vh;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.video-frame-wrap video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+  /* .video-frame-wrap{
+    width:100%;
+    border-radius:20px;
+} */
+
+/* .video-frame-wrap video{
+    width:100%;
+    max-height:85vh;
+    object-fit:cover;
+} */
+
+
+ 
+  .video-eyebrow{
+    font-size:11px;font-weight:600;letter-spacing:3px;
+    text-transform:uppercase;color:var(--green);
+    margin-bottom:10px;
+  }
+
+  .video-title{
+    font-size:clamp(20px,4vw,30px);font-weight:800;
+    color:var(--text);margin-bottom:6px;
+  }
+  .video-title span{
+    background:linear-gradient(135deg,var(--gold),var(--green));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  }
+
+  .video-desc{
+    font-family:'Noto Sans Telugu','Baloo 2',sans-serif;
+    font-size:14px;color:rgba(255,248,240,0.55);
+    margin-bottom:20px;line-height:1.6;
+  }
+
+  .video-frame-wrap{
+    border-radius:18px;overflow:hidden;
+    position:relative;
+    border:1px solid rgba(46,204,113,0.3);
+    box-shadow:0 0 60px rgba(46,204,113,0.12);
+    margin-bottom:20px;
+    background:#000;
+  }
+  .video-frame-wrap iframe,
+  /* .video-frame-wrap video{
+    width:100%;
+    display:block;border:none;
+  } */
+
+  .video-frame-wrap video{
+    width:100%;
+    height:85vh;
+    object-fit:contain;
+    display:block;
+}
+  .video-placeholder{
+    aspect-ratio:16/9;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:12px;
+    background:rgba(0,0,0,0.6);
+    color:rgba(255,248,240,0.35);font-size:14px;
+  }
+  .play-icon-big{font-size:60px;opacity:0.3;}
+
+  .funny-quote{
+    background:rgba(255,215,0,0.06);
+    border:1px solid rgba(255,215,0,0.18);
+    border-radius:12px;padding:14px 18px;
+    font-family:'Noto Sans Telugu','Baloo 2',sans-serif;
+    font-size:14px;color:rgba(255,248,240,0.7);
+    line-height:1.7;margin-bottom:20px;
+    font-style:italic;
+  }
+
+  .step3-btn{
+    width:100%;padding:15px;
+    background:linear-gradient(135deg,var(--green),#16a085);
+    border:none;border-radius:14px;
+    color:#fff;font-size:17px;font-weight:800;
+    cursor:pointer;font-family:'Baloo 2',sans-serif;
+    box-shadow:0 6px 28px rgba(46,204,113,0.35);
+    transition:all 0.2s;
+  }
+  .step3-btn:hover{transform:translateY(-2px);}
+
+  /* ═══════════════════════════════════════
+     STEP 4 — FINAL CELEBRATION
+  ═══════════════════════════════════════ */
+  #step4{background:radial-gradient(ellipse at center, #1a0a2e 0%, #0D0D1A 70%);}
+
+  .final-card{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,215,0,0.3);
+    border-radius:28px;padding:48px 40px;
+    max-width:560px;width:100%;
+    text-align:center;
+    animation:cardIn 0.6s ease both;
+  }
+
+  .big-emoji-row{
+    font-size:52px;margin-bottom:20px;
+    animation:bounce 1.5s ease-in-out infinite;
+  }
+
+  .final-title{
+    font-size:clamp(28px,7vw,58px);font-weight:800;
+    line-height:1.1;
+    background:linear-gradient(135deg,#FFD700,#FF4E8C,#9B59B6,#2ECC71);
+    background-size:300%;
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    animation:nameShimmer 4s linear infinite;
+    margin-bottom:10px;
+  }
+
+  .final-telugu{
+    font-family:'Noto Sans Telugu','Baloo 2',sans-serif;
+    font-size:clamp(16px,3.5vw,24px);
+    color:rgba(255,248,240,0.8);
+    line-height:1.8;margin-bottom:28px;
+  }
+
+  .from-line{
+    font-size:13px;letter-spacing:3px;
+    text-transform:uppercase;color:var(--gold);
+    margin-bottom:32px;
+  }
+
+  .restart-btn{
+    padding:14px 36px;
+    background:rgba(255,215,0,0.1);
+    border:1px solid rgba(255,215,0,0.35);
+    border-radius:50px;
+    color:var(--gold);font-size:15px;font-weight:600;
+    cursor:pointer;font-family:'Baloo 2',sans-serif;
+    transition:all 0.2s;
+  }
+  .restart-btn:hover{background:rgba(255,215,0,0.2);}
+
+  /* ── ANIMATIONS ── */
+  @keyframes giftPulse{0%,100%{box-shadow:0 0 40px rgba(255,78,140,0.4);}50%{box-shadow:0 0 80px rgba(255,78,140,0.7);}}
+  @keyframes bowBounce{0%,100%{transform:translateX(-50%) rotate(-5deg);}50%{transform:translateX(-50%) rotate(5deg);}}
+  @keyframes btnPulse{0%,100%{box-shadow:0 6px 30px rgba(255,215,0,0.4);}50%{box-shadow:0 6px 50px rgba(255,215,0,0.7);}}
+  @keyframes twinkle{0%,100%{opacity:0.2;transform:scale(0.8);}50%{opacity:1;transform:scale(1.3);}}
+  @keyframes glow{from{text-shadow:0 0 20px rgba(255,215,0,0.4);}to{text-shadow:0 0 50px rgba(255,215,0,0.9),0 0 80px rgba(255,78,140,0.4);}}
+  @keyframes cardIn{from{opacity:0;transform:translateY(40px) scale(0.95);}to{opacity:1;transform:translateY(0) scale(1);}}
+  @keyframes nameShimmer{0%{background-position:0% center;}100%{background-position:200% center;}}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+  @keyframes floatBalloon{0%{transform:translateY(0) rotate(-4deg);opacity:0;}5%{opacity:1;}95%{opacity:0.8;}100%{transform:translateY(-110vh) rotate(4deg);opacity:0;}}
+
+  @media (max-width:500px){
+    .wishes-card,.video-card,.final-card{padding:24px 18px;}
+    .bday-name{font-size:38px;}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation-duration:0.001ms!important;}}
+</style>
 </head>
-
 <body>
 
-  <div class="card">
-    <h1>Hey You 💕</h1>
-    <p>
-      From the moment you came into my life,<br>
-      everything felt more beautiful 🌹<br><br>
-      Will you be my Valentine? 💌
-    </p>
+<canvas id="fx-canvas"></canvas>
 
-    <button class="btn btn-yes" onclick="yesClicked()">
-      Yes 💖
-    </button>
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  STEP 1 — GIFT BOX                       ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="step active" id="step1">
+  <!-- ✏️ EDIT: page background stars -->
+  <div class="floating-stars" id="stars-layer"></div>
+
+  <div class="gift-wrap" onclick="openGift()">
+    <div class="gift-box">
+      <div class="gift-lid"></div>
+      <div class="gift-ribbon-h"></div>
+      <div class="gift-ribbon-v"></div>
+      <!-- ✏️ EDIT: bow emoji -->
+      <div class="gift-bow">🎀</div>
+    </div>
   </div>
 
-  <button class="btn btn-no" id="noBtn">
-    No 🙈
-  </button>
+  <!-- ✏️ EDIT: your friend's name below -->
+  <div class="step1-title">Nee Kosam Oka Surprise Undi! 🎁</div>
+  <!-- ✏️ EDIT: subtitle -->
+  <div class="step1-sub">Kindha, click chesthe chuskuntaav... 😄</div>
 
-  <!-- Floating Hearts -->
-  <!-- <script>
-    const noBtn = document.getElementById("noBtn");
+  <!-- ✏️ EDIT: button text -->
+  <button class="click-hint" onclick="openGift()">🎁 Gift Box Tiyyi! (Click #1)</button>
+</div>
 
-    noBtn.style.top = "70%";
-    noBtn.style.left = "55%";
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  STEP 2 — BIRTHDAY WISHES                ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="step" id="step2">
+  <div class="wishes-card">
+    <div class="bday-badge">🎉 Maree Puttinaroju Vacchindi!</div>
 
-    noBtn.addEventListener("mouseenter", () => {
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 50);
+    <!-- ✏️ EDIT: recipient's name -->
+    <div class="bday-name">Sravya Reddy(Chinni)!</div>
 
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
+    <!-- ✏️ EDIT: age or turn it off (remove this line) -->
+    <div class="bday-age">Ila evadaina 26 ki reach avvadam chala kashtapadinav😂</div>
+
+    <!-- ✏️ EDIT: main Telugu/funny message -->
+    <div class="telugu-msg">
+      Nee birthday ki chala kashtapadda... <br>
+      WhatsApp lo "Happy Birthday" type chesindi chaalu ani anukonna —<br>
+      Kaani nuvvu na best friend kaabatti oka special page chesaanu! 😎<br><br>
+
+      Nuvvu puttina roju nundi ee world lo oka funny, mad, paagal person puttindhi —<br>
+      <strong>Alaa nee gurinche cheppukovadaniki words chaalaav!</strong> 🤣<br><br>
+
+      <!-- ✏️ EDIT: personal funny line -->
+      <span class="funny-line">"Kaludham ante Chudam antav... 3 years ki kalisinav, Adurstham undali le naki kuda" 😂</span>
+    </div>
+
+    <!-- ✏️ EDIT: wish pills (add/remove/change) -->
+    <!-- <!-- <div class="wish-pills"> -->
+      <span class="pill pill-gold">💛 Happy Birthday!</span>
+      
+      <span class="pill pill-purple">😂 Nuvvu Best</span>
+      <span class="pill pill-green">🍗 Biriyani Pakka</span>
+      <span class="pill pill-gold">🥳 Puttinaroju Subhakanksalu</span>
+      <span class="pill pill-rose">🎂 Cake Tinnisthav</span>
+    </div> 
+
+    <!-- ✏️ EDIT: button text -->
+    <button class="step2-btn" onclick="goToVideo()">▶ Video Chuddam — Click #2! 🎬</button>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  STEP 3 — VIDEO                          ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="step" id="step3">
+  <div class="video-card">
+    <div class="video-eyebrow">🎬 Special Video Nee Kosam</div>
+
+    <!-- ✏️ EDIT: video section title -->
+    <div class="video-title">Ee video chuste <span>Eppudu tissinav ra sammi antav!</span> 🤣</div>
+
+    <!-- ✏️ EDIT: video description -->
+    <div class="video-desc">
+      Edho natho unapudu nenu gurthkupettkovdani gurthuvachinapudu chuskovadnaiki...
+      Tisskuna videos le  Delete chesta ankoku untai natho ne! 😂
+    </div>
+
+    <div class="video-frame-wrap">
+  <video id="birthdayVideo" controls playsinline width="100%">
+      <source src="Video/Video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+  </video>
+</div>
+
+    <!-- ✏️ EDIT: funny quote below video -->
+    <div class="funny-quote">
+      😆 "Nee face expression video chusete — emottaadi ani anipistundi..." <br>
+      — Nee best friend, who knows too much 😜
+    </div>
+
+    <!-- ✏️ EDIT: button text -->
+    <button class="step3-btn" onclick="goToFinal()">🎊 Grand Finale — Click #3!</button>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  STEP 4 — FINAL CELEBRATION              ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="step" id="step4">
+  <div class="final-card">
+
+    <!-- ✏️ EDIT: emoji row -->
+    <div class="big-emoji-row">🎂🎉🎈🥳🎁</div>
+
+    <!-- ✏️ EDIT: final big title -->
+    <div class="final-title">Happy Birthday<br>Madamm </div>
+
+    <!-- ✏️ EDIT: final Telugu message -->
+    <div class="final-telugu">
+      Nee life lo anni sukhamulu, haasaalu,<br>
+      Kashtalu badhalu unna life ankonduku! 🎉<br><br>
+      Nuvvu na life lo oka rare species —<br>
+      <strong>Mad but Meaningful!</strong> 😄💛<br><br>
+      Ilage Jeevitham marri inti putinarojulu jarupkunta pilla papalatho sukkham ga unduuu! 🥳<br><br>
+      <!-- ✏️ EDIT: your personal closing line -->
+      Itlu, nee best friend avvadaniki mee anumathi ledu,<br>
+      nenu already ayipoyyaanu! 😂❤️
+    </div>
+
+    <!-- ✏️ EDIT: sender name -->
+    <div class="from-line">— Nee Dost, Harish 🫂</div>
+
+    <button class="restart-btn" onclick="restart()">🔄 Malli Chudali? (Start Over)</button>
+  </div>
+</div>
+
+<script>
+// ── STATE ──────────────────────────────────────────────────────────────────
+let currentStep = 1;
+const canvas = document.getElementById('fx-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let balloons = [];
+let animating = false;
+
+// ── CANVAS RESIZE ──────────────────────────────────────────────────────────
+function resizeCanvas(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// ── FLOATING STARS ON STEP 1 ───────────────────────────────────────────────
+(function buildStars(){
+  const layer = document.getElementById('stars-layer');
+  const emojis = ['⭐','✨','💫','🌟'];
+  for(let i=0;i<14;i++){
+    const s = document.createElement('span');
+    s.textContent = emojis[i%emojis.length];
+    s.style.top = Math.random()*95+'%';
+    s.style.left = Math.random()*95+'%';
+    s.style.animationDelay = (Math.random()*3)+'s';
+    s.style.animationDuration = (2+Math.random()*2)+'s';
+    s.style.position='absolute';
+    layer.appendChild(s);
+  }
+})();
+
+// ── PARTICLE SYSTEM ────────────────────────────────────────────────────────
+const COLORS=['#FFD700','#FF4E8C','#9B59B6','#2ECC71','#FF6B35','#60a5fa','#fb923c'];
+
+function spawnConfetti(x,y,count=80){
+  for(let i=0;i<count;i++){
+    const angle = Math.random()*Math.PI*2;
+    const speed = 3+Math.random()*8;
+    particles.push({
+      x,y,
+      vx:Math.cos(angle)*speed,
+      vy:Math.sin(angle)*speed - 4,
+      w:6+Math.random()*8,h:3+Math.random()*5,
+      color:COLORS[Math.floor(Math.random()*COLORS.length)],
+      angle:Math.random()*Math.PI*2,
+      spin:(Math.random()-0.5)*0.2,
+      gravity:0.15,alpha:1,decay:0.012,
     });
+  }
+}
 
-    function yesClicked() {
-      document.body.innerHTML = `
-        <div class="text-center text-white">
-          <h1 class="display-4">Oh madam! 💖💖💖</h1>
-          <p class="fs-3 mt-3">
-            Maki  ante Lovers leru friends  miki ante untaru  enjoy friends🌹<br>
-            Happy Forever Single's Day 💌
-          </p>
-          Note: Don't take serious its just prank
-        </div>
-      `;
+function spawnRain(){
+  for(let i=0;i<120;i++){
+    setTimeout(()=>{
+      particles.push({
+        x:Math.random()*canvas.width,y:-20,
+        vx:(Math.random()-0.5)*1.5,vy:2+Math.random()*4,
+        w:5+Math.random()*7,h:3+Math.random()*4,
+        color:COLORS[Math.floor(Math.random()*COLORS.length)],
+        angle:Math.random()*Math.PI*2,spin:(Math.random()-0.5)*0.15,
+        gravity:0.04,alpha:1,decay:0.004,
+      });
+    },i*30);
+  }
+}
+
+function spawnBalloon(){
+  const emojis=['🎈','🎈','🎉','🎊','🥳'];
+  for(let i=0;i<6;i++){
+    setTimeout(()=>{
+      balloons.push({
+        x:80+Math.random()*(canvas.width-160),
+        y:canvas.height+60,
+        vy:-(1.2+Math.random()*1.5),
+        emoji:emojis[Math.floor(Math.random()*emojis.length)],
+        size:28+Math.random()*24,
+        wobble:Math.random()*Math.PI*2,
+        wobbleSpeed:0.02+Math.random()*0.02,
+        alpha:1,
+      });
+    },i*400);
+  }
+}
+
+// ── MAIN ANIMATION LOOP ────────────────────────────────────────────────────
+function loop(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // confetti
+  particles = particles.filter(p=>p.alpha>0);
+  particles.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy;
+    p.vy+=p.gravity; p.angle+=p.spin;
+    p.alpha-=p.decay;
+    if(p.y>canvas.height) p.alpha=0;
+    ctx.save();
+    ctx.globalAlpha=Math.max(0,p.alpha);
+    ctx.translate(p.x,p.y); ctx.rotate(p.angle);
+    ctx.fillStyle=p.color;
+    ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+    ctx.restore();
+  });
+
+  // balloons
+  balloons = balloons.filter(b=>b.y>-100&&b.alpha>0);
+  balloons.forEach(b=>{
+    b.y+=b.vy; b.wobble+=b.wobbleSpeed;
+    b.x+=Math.sin(b.wobble)*0.6;
+    if(b.y<-60) b.alpha-=0.05;
+    ctx.save();
+    ctx.globalAlpha=Math.max(0,b.alpha);
+    ctx.font=b.size+'px serif';
+    ctx.fillText(b.emoji,b.x,b.y);
+    ctx.restore();
+  });
+
+  requestAnimationFrame(loop);
+}
+loop();
+
+// ── NAVIGATION ─────────────────────────────────────────────────────────────
+// function showStep(n){
+//   document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+//   document.getElementById('step'+n).classList.add('active');
+//   currentStep=n;
+// }
+function showStep(n) {
+
+  document.querySelectorAll('.step').forEach(step => {
+    step.classList.remove('active');
+  });
+
+  const targetStep = document.getElementById(`step${n}`);
+
+  if (targetStep) {
+    targetStep.classList.add('active');
+    currentStep = n;
+  } else {
+    console.error(`Step ${n} not found`);
+  }
+}
+
+function openGift(){
+  const box=document.querySelector('.gift-box');
+  box.style.transform='scale(0) rotate(180deg)';
+  box.style.transition='transform 0.5s ease';
+  const cx=window.innerWidth/2, cy=window.innerHeight/2;
+  spawnConfetti(cx,cy,100);
+  setTimeout(()=>{ showStep(2); spawnRain(); },600);
+}
+
+function goToVideo(){
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+
+  spawnConfetti(cx, cy, 60);
+
+  setTimeout(() => {
+    showStep(3);
+
+    const video = document.getElementById("birthdayVideo");
+
+    if(video){
+      video.currentTime = 0;
+
+      const playPromise = video.play();
+
+      if(playPromise !== undefined){
+        playPromise.catch(() => {
+          console.log("Autoplay blocked by browser");
+        });
+      }
     }
-
-    // Heart animation
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "hearts";
-      heart.innerHTML = "❤️";
-      heart.style.left = Math.random() * 100 + "vw";
-      document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 6000);
-    }, 400);
-  </script> -->
-
-  <script>
-  const noBtn = document.getElementById("noBtn");
-
-  function moveNoButton() {
-    const x = Math.random() * (window.innerWidth - 120);
-    const y = Math.random() * (window.innerHeight - 80);
-
-    noBtn.style.left = `${x}px`;
-    noBtn.style.top = `${y}px`;
-  }
-
-  // Desktop hover
-  noBtn.addEventListener("mouseenter", moveNoButton);
-
-  // Mobile touch
-  noBtn.addEventListener("touchstart", (e) => {
-    e.preventDefault(); // stop click
-    moveNoButton();
-  });
-
-  noBtn.addEventListener("touchmove", (e) => {
-    e.preventDefault();
-    moveNoButton();
-  });
-
-  function yesClicked() {
-    document.body.innerHTML = `
-      <div class="text-center text-white">
-        <h1 class="display-4">Oh madam! 💖💖💖</h1>
-
-        <p class="fs-3 mt-3">
-  Antha murisi pokuu 😏😂🙈<br>
-  nenu urike develop chesa, time pass kosam 😄<br>
-  nijanga proposal kadhu 😅🙏<br><br>
-
-  Maki ante lovers leru 😌💔<br>
-  Miki ante untaru 🤍🙂<br>
-  Meeru enjoy friends 😎🌹<br><br>
-
-  Happy Forever Single's Day to mee 💌😜
-</p>
-
-        
-        <small>Note: Don't take it serious, just a prank 😄</small>
-      </div>
-    `;
-  }
-
-  // Floating hearts
-  setInterval(() => {
-    const heart = document.createElement("div");
-    heart.className = "hearts";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 6000);
   }, 400);
+}
+
+  function goToFinal(){
+  showStep(4);
+  spawnRain();
+  setTimeout(spawnBalloon,300);
+  setTimeout(spawnBalloon,2000);
+}
+
+function restart(){
+  particles=[]; balloons=[];
+  const box=document.querySelector('.gift-box');
+  box.style.transform=''; box.style.transition='';
+  showStep(1);
+}
 </script>
-
-
 </body>
 </html>
